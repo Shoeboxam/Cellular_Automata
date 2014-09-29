@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClCompile Include="..\CA_Application.cpp" />
     <ClCompile Include="Automaton.cpp" />
+    <ClCompile Include="Cellular_Render.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Automaton.h" />

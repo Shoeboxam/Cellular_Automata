@@ -26,8 +26,11 @@
     <ClCompile Include="..\CA_Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Cellular_Render.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Automaton.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
