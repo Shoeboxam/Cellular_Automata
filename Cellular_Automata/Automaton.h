@@ -17,12 +17,12 @@ class Automaton {
 	static vector<bool> Automaton::to_vector(string input);
 
 	//Store list of boolean vectors - vectors used because they are dynamically allocated
-	std::vector<vector<bool>> bit_table;
+	vector<vector<bool>> bit_table;
 
 	bitset<8> rule;
 
 	//Current calculated limit
-	int depth = 0;
+	int depth;
 
 	void ordered_build(int limit);
 	bool whitespace_predictor(int depth);

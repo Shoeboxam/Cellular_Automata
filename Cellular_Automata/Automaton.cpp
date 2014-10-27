@@ -1,27 +1,21 @@
 #include "Automaton.h"
 
-vector<bool> Automaton::to_vector(string input){
-	vector<bool> buffer;
-	for (int i = 0; i < input.length(); i++){
-		buffer[i] = input[i];
-	}
-	return buffer;
-}
-
 Automaton::Automaton(int input){
 	//Initialize rule to bit array using bitset conversion
 	rule = input % 256;
+
+	depth = 0;
 }
 
 const std::unordered_map<vector<bool>, int> Automaton::conversion_table = {
-		{ to_vector("111"), 0 },
-		{ to_vector("110"), 1 },
-		{ to_vector("101"), 2 },
-		{ to_vector("100"), 3 },
-		{ to_vector("011"), 4 },
-		{ to_vector("010"), 5 },
-		{ to_vector("001"), 6 },
-		{ to_vector("000"), 7 }
+		{ vector < bool > {1, 1, 1}, 0 },
+		{ vector < bool > {1, 1, 0}, 1 },
+		{ vector < bool > {1, 0, 1}, 2 },
+		{ vector < bool > {1, 0, 0}, 3 },
+		{ vector < bool > {0, 1, 1}, 4 },
+		{ vector < bool > {0, 1, 0}, 5 },
+		{ vector < bool > {0, 0, 1}, 6 },
+		{ vector < bool > {0, 0, 0}, 7 }
 };
 
 bool Automaton::compose(int x, int y){
