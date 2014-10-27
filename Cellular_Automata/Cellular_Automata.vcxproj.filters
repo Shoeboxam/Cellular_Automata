@@ -18,18 +18,12 @@
     <ClInclude Include="Automaton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cellular_Render.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\CA_Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Cellular_Render.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Automaton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

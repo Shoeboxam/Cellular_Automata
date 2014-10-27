@@ -1,6 +1,6 @@
 #include "Automaton.h"
 
-vector<bool> automaton::to_vector(string input){
+vector<bool> Automaton::to_vector(string input){
 	vector<bool> buffer;
 	for (int i = 0; i < input.length(); i++){
 		buffer[i] = input[i];
@@ -8,12 +8,12 @@ vector<bool> automaton::to_vector(string input){
 	return buffer;
 }
 
-automaton::automaton(int input){
+Automaton::Automaton(int input){
 	//Initialize rule to bit array using bitset conversion
 	rule = input % 256;
 }
 
-const std::unordered_map<vector<bool>, int> automaton::conversion_table = {
+const std::unordered_map<vector<bool>, int> Automaton::conversion_table = {
 		{ to_vector("111"), 0 },
 		{ to_vector("110"), 1 },
 		{ to_vector("101"), 2 },
@@ -24,7 +24,7 @@ const std::unordered_map<vector<bool>, int> automaton::conversion_table = {
 		{ to_vector("000"), 7 }
 };
 
-bool automaton::compose(int x, int y){
+bool Automaton::compose(int x, int y){
 	//Calculate tree up to limit
 	if (y > depth) ordered_build(y);
 
@@ -35,7 +35,7 @@ bool automaton::compose(int x, int y){
 	return bit_table[y][x - y];
 }
 
-void automaton::ordered_build(int limit){
+void Automaton::ordered_build(int limit){
 
 	//Loop through each value in matrix
 	while (depth < limit){
@@ -43,31 +43,31 @@ void automaton::ordered_build(int limit){
 		bool whitespace = whitespace_predictor(depth);
 
 		//Width of row is equivalent to double depth
-		int width = depth * 2;
+		int width = depth * 2 + 1;
 		vector<bool> row(width);
 
 		//First two and last two values in row use whitespace predictor
 		row.push_back(rule[conversion_table.at(vector < bool > {whitespace, whitespace, bit_table[depth - 1][0]})]);
-		row.push_back(rule[conversion_table.at(vector < bool > {whitespace, bit_table[depth - 1][0], bit_table[depth - 1][1]})]);
+		row.push_back(rule[conversion_table.at(vector < bool > {whitespace, bit_table.back()[0], bit_table.back()[1]})]);
 
-		for (int x = 2; x < width - 2; x++){
-			//3-bit vector mapped to conversion table, mapped to rule map, then saved to row
+		for (int x = 2; x < width - 3; x++){
+			//3-bit vector mapped to conversion table, mapped to rule table, then saved to row
 			//append ... apply_rule(identify_pattern(bits)) ... to row
-			row.push_back(rule[conversion_table.at(vector<bool>(bit_table[depth - 1][x - 1], bit_table[depth - 1][x + 1]))]);
+			row.push_back(rule[conversion_table.at(vector < bool > {bit_table.back()[x - 1], bit_table.back()[x], bit_table.back()[x + 1]})]);
 		}
 
-		row.push_back(rule[conversion_table.at(vector < bool > {bit_table[depth - 1][width - 2], bit_table[depth - 1][width - 1], whitespace})]);
-		row.push_back(rule[conversion_table.at(vector < bool > {bit_table[depth - 1][width - 1], whitespace, whitespace})]);
+		row.push_back(rule[conversion_table.at(vector < bool > {bit_table.back()[width - 2], bit_table.back()[width - 1], whitespace})]);
+		row.push_back(rule[conversion_table.at(vector < bool > {bit_table.back()[width - 1], whitespace, whitespace})]);
 
 		//Save each row
-		bit_table[depth] = row;
+		bit_table.push_back(row);
 
 		//Calculate each row
 		depth++;
 	}
 }
 
-bool automaton::whitespace_predictor(int depth){
+bool Automaton::whitespace_predictor(int depth){
 	//Predict whitespace pattern of entire rows
 
 	//Whitespace alternates if black becomes white and white becomes black

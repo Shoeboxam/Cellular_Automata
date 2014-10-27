@@ -1,5 +1,5 @@
-#ifndef AUTOMATON_H
-#define AUTOMATON_H
+#ifndef Automaton_H
+#define Automaton_H
 
 #include <cmath>
 #include <string>
@@ -13,11 +13,11 @@ using std::bitset;
 using std::vector;
 
 
-class automaton {
-	static vector<bool> automaton::to_vector(string input);
+class Automaton {
+	static vector<bool> Automaton::to_vector(string input);
 
 	//Store list of boolean vectors - vectors used because they are dynamically allocated
-	std::map<int, vector<bool>> bit_table;
+	std::vector<vector<bool>> bit_table;
 
 	bitset<8> rule;
 
@@ -30,8 +30,7 @@ class automaton {
 	static const std::unordered_map<vector<bool>, int> conversion_table;
 
 public:
-	automaton(int input);
-	~automaton();
+	Automaton(int input);
 
 	bool compose(int x, int y);
 };
