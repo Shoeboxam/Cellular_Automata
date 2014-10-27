@@ -83,9 +83,11 @@
   <ItemGroup>
     <ClCompile Include="..\Application.cpp" />
     <ClCompile Include="Automaton.cpp" />
+    <ClCompile Include="Render.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Automaton.h" />
+    <ClInclude Include="Render.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
