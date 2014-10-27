@@ -5,6 +5,8 @@ Render::Render(Automaton* m_autom){
 	//Save pointer to automaton
 	autom = m_autom;
 
+	zoom = 1;
+
 	//Start SDL, check for failures
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) throw ("SDL failure to initialize: %s\n", SDL_GetError());
 	window = SDL_CreateWindow("Automaton", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
@@ -16,6 +18,33 @@ Render::Render(Automaton* m_autom){
 	SDL_UpdateWindowSurface(window);
 }
 
+bool Render::Display(){
+	SDL_Surface* cube = NULL;
+	SDL_FillRect(cube, NULL, SDL_MapRGB(cube->format, 0x00, 0x00, 0x00));
+
+	//Holds location of box to render
+	SDL_Rect* target;
+
+	float scale = SCREEN_HEIGHT * zoom;
+	target->h = scale;
+	target->w = scale;
+
+	for (int y = int(SCREEN_HEIGHT / scale); y >= 0; y--){
+		target->y = y * scale;
+		for (int x = int(SCREEN_WIDTH / scale); x >= 0; x--){
+			target->x = x * scale;
+			SDL_BlitSurface(cube, target, surface, NULL);
+		}
+	}
+
+	SDL_UpdateWindowSurface(window);
+	return true;
+}
+
+
+void Render::set_automaton(Automaton* m_autom){
+	autom = m_autom;
+}
 
 Render::~Render(){
 

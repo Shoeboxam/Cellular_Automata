@@ -13,9 +13,16 @@ class Render {
 	SDL_Window* window;
 	SDL_Surface* surface;
 
+	vector<float> coordinate;
+	float zoom; // 1: cube = screen
+
 public:
 	Render(Automaton* m_autom);
 	~Render();
+
+	bool Display();
+	//Setters
+	void set_automaton(Automaton* m_autom);
 
 	void Pause(int seconds);
 };

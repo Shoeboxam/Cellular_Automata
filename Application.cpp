@@ -19,39 +19,17 @@ void console_render(Automaton custom_Automaton){
 }
 
 int main(int argc, char* args[]) {
-	Automaton* automa = new Automaton(5);
-	Render* frame = new Render(automa);
+	vector<Automaton> automa_comprehensive;
+	
+	//Allocate 256 automata, one for each rule - initial allocation footprint is tiny
+	//Prevents destruction of computed automata
+	for (int i = 0; i < 256; i++){
+		automa_comprehensive.push_back(Automaton(i));
+	}
+
+	Render* frame = new Render(&automa_comprehensive[4]);
 
 	//frame->Pause(10);
-
-	//User selects how seeds are chosen
-	int input_preference = 0;
-	printf("[1] Explicit [2] Linear [3] Random :: ");
-	cin >> input_preference;
-
-
-	if (input_preference == 1){ //Explicit
-		while (true){
-			int rule_preference = 0;
-			cout << "Rule: ";
-			cin >> rule_preference;
-
-			Automaton custom(rule_preference);
-			console_render(custom);
-		}
-	}
-
-	if (input_preference == 2){ //Linear
-		for (int i = 0; i < 256; i++){
-			Automaton custom(i);
-		}
-	}
-
-	if (input_preference == 3){ //Random
-		while (true){
-			Automaton custom(rand() % 256);
-		}
-	}
 
 	system("pause");
 	return 0;
