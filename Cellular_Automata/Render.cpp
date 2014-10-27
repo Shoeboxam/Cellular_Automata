@@ -19,6 +19,8 @@ Render::Render(Automaton* m_autom){
 }
 
 bool Render::Display(){
+	//Instead of back-calculating coords, possibly compose render window range into vector, then traverse vector?
+
 	SDL_Surface* cube = NULL;
 	SDL_FillRect(cube, NULL, SDL_MapRGB(cube->format, 0x00, 0x00, 0x00));
 
@@ -33,7 +35,8 @@ bool Render::Display(){
 		target->y = y * scale;
 		for (int x = int(SCREEN_WIDTH / scale); x >= 0; x--){
 			target->x = x * scale;
-			SDL_BlitSurface(cube, target, surface, NULL);
+			// if (autom->compose(respective coords)) { blit }
+			SDL_BlitSurface(surface, NULL, cube, target);
 		}
 	}
 
@@ -58,3 +61,14 @@ Render::~Render(){
 void Render::Pause(int seconds){
 	SDL_Delay(seconds * 1000);
 }
+
+
+/* ~~~ Keybindings
+Numpad - rule entry
+Scrollbar - zoom
+Mouse Left - drag
+Arrows - scroll
+Right Click - invert cell
+R - Random rule
+H - move location to home
+*/
