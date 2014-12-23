@@ -6,7 +6,11 @@
 
 #include <SDL.h>
 #include <utility>
+#include <chrono>
+#include <thread>
+
 #include "Automaton.h"
+
 
 class Render {
 

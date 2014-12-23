@@ -26,7 +26,9 @@ Render::Render(Automaton* m_autom){
 }
 
 bool Render::draw(){
-	
+	//Reset screen
+	SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0x67, 0x6c, 0x7e));
+
 	//Holds location of box to render
 	SDL_Rect rectangle = { 0, 0, 0, 0 };
 
@@ -56,7 +58,13 @@ bool Render::loop(){
 	while (!quit){
 
 		//Calculate updated surface
+		
+
 		if (!draw()) return false;
+		SDL_UpdateWindowSurface(window);
+
+		zoom /= 1.2;
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	}
 	
 	return true;
