@@ -1,13 +1,13 @@
-#include "Automaton.h"
+#include "Automaton_Elementary.h"
 
-Automaton::Automaton(int input){
+Automaton_Elementary::Automaton_Elementary(int input){
 	//Initialize rule to bit array using bitset conversion
 	rule = input % 256;
 
 	depth = 0;
 }
 
-const std::unordered_map<vector<bool>, int> Automaton::conversion_table = {
+const std::unordered_map<vector<bool>, int> Automaton_Elementary::conversion_table = {
 		{ vector < bool > {1, 1, 1}, 0 },
 		{ vector < bool > {1, 1, 0}, 1 },
 		{ vector < bool > {1, 0, 1}, 2 },
@@ -18,7 +18,7 @@ const std::unordered_map<vector<bool>, int> Automaton::conversion_table = {
 		{ vector < bool > {0, 0, 0}, 7 }
 };
 
-bool Automaton::compose(int x, int y){
+bool Automaton_Elementary::compose(int x, int y){
 	//Calculate tree up to limit
 	if (y > depth) ordered_build(y);
 
@@ -29,7 +29,7 @@ bool Automaton::compose(int x, int y){
 	return bit_table[y][x - y];
 }
 
-void Automaton::ordered_build(int limit){
+void Automaton_Elementary::ordered_build(int limit){
 
 	//Loop through each value in matrix
 	while (depth < limit){
@@ -61,7 +61,7 @@ void Automaton::ordered_build(int limit){
 	}
 }
 
-bool Automaton::whitespace_predictor(int depth){
+bool Automaton_Elementary::whitespace_predictor(int depth){
 	//Predict whitespace pattern of entire rows
 
 	//Whitespace alternates if black becomes white and white becomes black

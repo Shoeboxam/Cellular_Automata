@@ -58,7 +58,7 @@
       <AdditionalIncludeDirectories>C:\Users\mike_000\Documents\Visual Studio 2013\Projects\Cellular_Automata\Cellular_Automata;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -82,11 +82,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Application.cpp" />
-    <ClCompile Include="Automaton.cpp" />
+    <ClCompile Include="Automaton_Elementary.cpp" />
     <ClCompile Include="Render.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Automaton.h" />
+    <ClInclude Include="Automaton_Elementary.h" />
+    <ClInclude Include="Automaton_Random.h" />
     <ClInclude Include="Render.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

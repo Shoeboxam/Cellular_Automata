@@ -2,6 +2,7 @@
 
 
 Render::Render(Automaton* m_autom){
+
 	//Save pointer to automaton
 	autom = m_autom;
 
@@ -9,38 +10,55 @@ Render::Render(Automaton* m_autom){
 
 	//Start SDL, check for failures
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) throw ("SDL failure to initialize: %s\n", SDL_GetError());
+
 	window = SDL_CreateWindow("Automaton", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-	
 	if (window == NULL) throw ("SDL failure to declare: %s\n", SDL_GetError());
+
 	surface = SDL_GetWindowSurface(window);
 
-	SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0xff, 0xff, 0xff));
+	SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0x67, 0x6c, 0x7e));
+
+	//Create renderer for window
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	if (renderer == NULL) throw ("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+
 	SDL_UpdateWindowSurface(window);
 }
 
-bool Render::Display(){
-	//Instead of back-calculating coords, possibly compose render window range into vector, then traverse vector?
-
-	SDL_Surface* cube = NULL;
-	SDL_FillRect(cube, NULL, SDL_MapRGB(cube->format, 0x00, 0x00, 0x00));
-
+bool Render::draw(){
+	
 	//Holds location of box to render
-	SDL_Rect* target;
+	SDL_Rect rectangle = { 0, 0, 0, 0 };
 
+	//Determine size of box
 	float scale = SCREEN_HEIGHT * zoom;
-	target->h = scale;
-	target->w = scale;
+	rectangle.h = scale;
+	rectangle.w = scale;
 
-	for (int y = int(SCREEN_HEIGHT / scale); y >= 0; y--){
-		target->y = y * scale;
-		for (int x = int(SCREEN_WIDTH / scale); x >= 0; x--){
-			target->x = x * scale;
-			// if (autom->compose(respective coords)) { blit }
-			SDL_BlitSurface(surface, NULL, cube, target);
+	for (int y = 0; y <= int(1 / zoom) + 1; y++){
+		rectangle.y = y;
+		for (int x = 0; x <= int(1 / zoom); x++){
+			rectangle.x = x;
+
+			if (autom->compose(x + offset.first, y + offset.second)){
+
+				SDL_FillRect(surface, &rectangle, SDL_MapRGB(surface->format, 0xa7, 0x98, 0x62));
+			}
 		}
 	}
+	return true;
+}
 
-	SDL_UpdateWindowSurface(window);
+	
+bool Render::loop(){
+	bool quit = false;
+
+	while (!quit){
+
+		//Calculate updated surface
+		if (!draw()) return false;
+	}
+	
 	return true;
 }
 
@@ -58,7 +76,7 @@ Render::~Render(){
 }
 
 
-void Render::Pause(int seconds){
+void Render::pause(int seconds){
 	SDL_Delay(seconds * 1000);
 }
 
