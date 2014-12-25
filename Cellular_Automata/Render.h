@@ -18,7 +18,7 @@ class Render {
 
 	SDL_Window* window = NULL;
 	SDL_Surface* surface = NULL;
-	SDL_Event* event_current = NULL;
+	SDL_Event event_current;
 
 	SDL_Renderer* renderer = NULL;
 

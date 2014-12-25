@@ -21,7 +21,7 @@ void console_render(Automaton &custom_automaton){
 
 int main(int argc, char* args[]) {
 
-	cout << "test";
+	cout << "Rendering Automaton ...";
 	vector<Automaton_Elementary> automa_comprehensive;
 	
 	//Allocate 256 automata, one for each rule - initial allocation footprint is tiny
@@ -37,6 +37,5 @@ int main(int argc, char* args[]) {
 	frame->loop();
 	//frame->Pause(10);
 
-	system("pause");
 	return 0;
 }
