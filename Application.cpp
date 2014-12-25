@@ -35,7 +35,6 @@ int main(int argc, char* args[]) {
 	Render* frame = new Render(&Automaton_Random());
 	
 	frame->loop();
-	//frame->Pause(10);
 
 	return 0;
 }

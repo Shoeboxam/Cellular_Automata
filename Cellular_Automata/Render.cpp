@@ -37,9 +37,9 @@ bool Render::draw(){
 	rectangle.h = scale;
 	rectangle.w = scale;
 
-	for (int y = 0; y <= int(1 / zoom); y++){
+	for (int y = 0; y <= int(SCREEN_HEIGHT / scale); y++){
 		rectangle.y = y * scale;
-		for (int x = 0; x <= int(1 / zoom); x++){
+		for (int x = 0; x <= int(SCREEN_WIDTH / scale); x++){
 			rectangle.x = x * scale;
 
 			if (autom->compose(x + offset.first, y + offset.second)){
@@ -58,11 +58,6 @@ bool Render::loop(){
 	zoom = .5;
 
 	while (!quit){
-
-		//Calculate updated surface
-	
-		if (!draw()) return false;
-		SDL_UpdateWindowSurface(window);
 
 		while (SDL_PollEvent(&event_current)){
 			switch (event_current.type){
@@ -89,8 +84,13 @@ bool Render::loop(){
 			break;
 		}
 
-		//std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		//Calculate updated surface
+
+		if (!draw()) return false;
+		SDL_UpdateWindowSurface(window);
 	}
+
+
 	
 	return true;
 }
