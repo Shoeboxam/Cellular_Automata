@@ -2,8 +2,9 @@
 //Render configurable cellular automata
 
 #include <iostream>
-#include "Automaton_Random.h"
 #include "Automaton_Elementary.h"
+#include "Algorithm_Random.h"
+#include "Algorithm_Modulo.h"
 #include "Render.h"
 
 using std::cout;
@@ -32,7 +33,7 @@ int main(int argc, char* args[]) {
 
 
 	//Render* frame = new Render(&automa_comprehensive[110]);
-	Render* frame = new Render(&Automaton_Random());
+	Render* frame = new Render(&Algorithm_Modulo());
 	
 	frame->loop();
 

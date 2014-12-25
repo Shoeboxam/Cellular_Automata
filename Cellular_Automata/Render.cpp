@@ -6,7 +6,7 @@ Render::Render(Automaton* m_autom){
 	//Save pointer to automaton
 	autom = m_autom;
 
-	zoom = 1;
+	zoom = .025;
 
 	//Start SDL, check for failures
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) throw ("SDL failure to initialize: %s\n", SDL_GetError());
@@ -54,8 +54,6 @@ bool Render::draw(){
 	
 bool Render::loop(){
 	bool quit = false;
-
-	zoom = .5;
 
 	while (!quit){
 

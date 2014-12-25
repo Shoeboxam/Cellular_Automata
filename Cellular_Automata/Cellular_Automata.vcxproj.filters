@@ -24,7 +24,10 @@
     <ClInclude Include="Automaton_Elementary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Automaton_Random.h">
+    <ClInclude Include="Algorithm_Modulo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm_Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

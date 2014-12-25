@@ -88,7 +88,8 @@
   <ItemGroup>
     <ClInclude Include="Automaton.h" />
     <ClInclude Include="Automaton_Elementary.h" />
-    <ClInclude Include="Automaton_Random.h" />
+    <ClInclude Include="Algorithm_Modulo.h" />
+    <ClInclude Include="Algorithm_Random.h" />
     <ClInclude Include="Render.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
