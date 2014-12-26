@@ -23,13 +23,10 @@ class Automaton_Elementary : public Automaton {
 
 	bitset<8> rule;
 
-	//Current calculated limit
-	int depth;
-
 	void ordered_build(int limit);
 	bool whitespace_predictor(int depth);
 
-	static const std::unordered_map<vector<bool>, int> conversion_table;
+	static const std::unordered_map< vector< bool >, int > conversion_table;
 
 public:
 	Automaton_Elementary(int input);

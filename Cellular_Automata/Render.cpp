@@ -48,6 +48,9 @@ bool Render::draw(){
 			}
 		}
 	}
+
+	SDL_UpdateWindowSurface(window);
+
 	return true;
 }
 
@@ -83,9 +86,7 @@ bool Render::loop(){
 		}
 
 		//Calculate updated surface
-
 		if (!draw()) return false;
-		SDL_UpdateWindowSurface(window);
 	}
 
 

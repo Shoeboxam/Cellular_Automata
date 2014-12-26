@@ -25,9 +25,9 @@ class Render {
 	std::pair<float, float> offset;
 	float zoom; // 1: cube = screen
 
-	bool draw();
 
 public:
+	bool draw();
 	Render(Automaton* m_autom);
 	~Render();
 
