@@ -1,5 +1,7 @@
 #include "Render.h"
 
+#include <iostream>
+using std::cout;
 
 Render::Render(Automaton* m_autom){
 
@@ -34,8 +36,8 @@ bool Render::draw(){
 
 	//Determine size of box
 	float scale = SCREEN_HEIGHT * zoom;
-	rectangle.h = scale;
-	rectangle.w = scale;
+	rectangle.h = ceil(scale);
+	rectangle.w = ceil(scale);
 
 	for (int y = 0; y <= int(SCREEN_HEIGHT / scale); y++){
 		rectangle.y = y * scale;
@@ -73,12 +75,29 @@ bool Render::loop(){
 				case SDLK_s:
 					zoom *= 0.9;
 					break;
+				case SDLK_LEFT:
+					offset.first -= 5;
+					break;
+				case SDLK_RIGHT:
+					offset.first += 5;
+					break;
+				case SDLK_UP:
+					offset.second -= 5;
+					break;
+				case SDLK_DOWN:
+					offset.second += 5;
+					break;
 				}
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 				switch (event_current.button.button){
-				case SDL_BUTTON_MIDDLE:
-					//do stuff
+				case SDL_BUTTON_LEFT:
+					if (event_current.type == SDL_MOUSEMOTION) {
+						offset.first += event_current.motion.xrel;
+						offset.second += event_current.motion.yrel;
+
+						cout << "Registered SDL_BUTTON_LEFT\n";
+					}
 					break;
 				}
 			}

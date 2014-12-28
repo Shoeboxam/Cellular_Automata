@@ -33,7 +33,7 @@ bool Automaton_Elementary::compose(int x, int y){
 	if (y < 0) return false;
 
 	//Return whitespace if outside of logic tree
-	if (abs(x) > y) return whitespace_predictor(y + 1);
+	if (abs(x) > y) return whitespace_predictor(y);
 
 	//Else calculate tree up to limit
 	if (y > bit_table.size() - 1) ordered_build(y);
@@ -75,7 +75,7 @@ bool Automaton_Elementary::whitespace_predictor(int row){
 	//Predict whitespace pattern of entire rows
 
 	//Whitespace alternates if black becomes white and white becomes black
-	if (!rule[7] && rule[0]) return row % 2;
+	if (!rule[7] && rule[0]) return (row) % 2;
 
 	//Whitespace is black if white becomes black
 	if (rule[0]) return true;
