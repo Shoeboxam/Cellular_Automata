@@ -31,7 +31,7 @@ int main(int argc, char* args[]) {
 		automa_comprehensive.push_back(Automaton_Elementary(i));
 	}
 
-	Render* frame = new Render(&automa_comprehensive[150]);
+	Render* frame = new Render(&automa_comprehensive[193]);
 	//Render* frame = new Render(&Algorithm_Modulo());
 	//frame->draw();
 	frame->loop();

@@ -8,6 +8,8 @@ Render::Render(Automaton* m_autom){
 	//Save pointer to automaton
 	autom = m_autom;
 
+	momentum.first = 0;
+	momentum.second = 0;
 	zoom = .025;
 
 	//Start SDL, check for failures
@@ -62,6 +64,12 @@ bool Render::loop(){
 
 	while (!quit){
 
+		offset.first += momentum.first;
+		offset.second += momentum.second;
+
+		momentum.first *= .9;
+		momentum.second *= .9;
+
 		while (SDL_PollEvent(&event_current)){
 			switch (event_current.type){
 			case SDL_QUIT:
@@ -69,23 +77,23 @@ bool Render::loop(){
 				break;
 			case SDL_KEYDOWN:
 				switch (event_current.key.keysym.sym){
-				case SDLK_w:
+				case SDLK_UP:
 					zoom *= 1.1;
 					break;
-				case SDLK_s:
+				case SDLK_DOWN:
 					zoom *= 0.9;
 					break;
-				case SDLK_LEFT:
-					offset.first -= 5;
+				case SDLK_a:
+					momentum.first--;
 					break;
-				case SDLK_RIGHT:
-					offset.first += 5;
+				case SDLK_d:
+					momentum.first++;
 					break;
-				case SDLK_UP:
-					offset.second -= 5;
+				case SDLK_w:
+					momentum.second--;
 					break;
-				case SDLK_DOWN:
-					offset.second += 5;
+				case SDLK_s:
+					momentum.second++;
 					break;
 				}
 				break;
@@ -107,9 +115,6 @@ bool Render::loop(){
 		//Calculate updated surface
 		if (!draw()) return false;
 	}
-
-
-	
 	return true;
 }
 

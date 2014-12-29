@@ -23,6 +23,7 @@ class Render {
 	SDL_Renderer* renderer = NULL;
 
 	std::pair<float, float> offset;
+	std::pair<float, float> momentum;
 	float zoom; // 1: cube = screen
 
 
