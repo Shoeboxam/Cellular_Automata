@@ -14,7 +14,7 @@ public:
 	}
 
 	bool Algorithm_Random::compose(int x, int y) {
-		return rand() % 2;
+		return bool(rand() % 2);
 	}
 };
 

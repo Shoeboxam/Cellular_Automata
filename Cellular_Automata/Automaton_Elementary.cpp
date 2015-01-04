@@ -1,9 +1,10 @@
 #include "Automaton_Elementary.h"
 
-Automaton_Elementary::Automaton_Elementary(int input){
+Automaton_Elementary::Automaton_Elementary(int input, int buffer_construct){
 	//Initialize rule to bit array using bitset conversion
 	rule = input % 256;
-	
+
+	buffer = buffer_construct;
 
 	//Create first row manually
 	bit_table.push_back(vector < bool > {1});
@@ -13,7 +14,21 @@ Automaton_Elementary::Automaton_Elementary(int input){
 	second_row.push_back(rule[conversion_table.at(vector < bool > {false, false, true})]);
 	second_row.push_back(rule[conversion_table.at(vector < bool > {false, true, false})]);
 	second_row.push_back(rule[conversion_table.at(vector < bool > {true, false, false})]);
-	bit_table.push_back(second_row);
+	bit_table.load().push_back(second_row);
+
+	creator = new std::thread(&Automaton_Elementary::ordered_build, this, buffer + 10000);
+	creator->detach();
+
+
+}
+
+bool Automaton_Elementary::set_buffer(int input){
+	if (input >= 0){
+		buffer = input;
+		return true;
+	}
+
+	return false;
 }
 
 const std::unordered_map<vector<bool>, int> Automaton_Elementary::conversion_table = {
@@ -35,39 +50,45 @@ bool Automaton_Elementary::compose(int x, int y){
 	//Return whitespace if outside of logic tree
 	if (abs(x) > y) return whitespace_predictor(y);
 
-	//Else calculate tree up to limit
-	if (y > bit_table.size() - 1) ordered_build(y);
+	//Else calculate tree up to limit if buffer is gone
+	while (y > bit_table.load().size() - 1) std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	
+	// If half of buffer is used up, start a new thread
+	//if (bit_table.size() + buffer / 2 < y + buffer) {
+		//creator = new std::thread(&Automaton_Elementary::ordered_build, this, y + buffer);
+		//creator->detach();
+	//}
 
 	//Return value from logic tree with x offset by depth
-	return bit_table[y][x + y];
+	return bit_table.load()[y][x + y];
 }
 
 void Automaton_Elementary::ordered_build(int limit){
 
 	//Loop through each value in matrix
-	while (bit_table.size() - 1 < limit){
+	while (bit_table.load().size() - 1 < limit){
 
-		bool whitespace = whitespace_predictor(bit_table.size());
+		bool whitespace = whitespace_predictor(bit_table.load().size());
 
 		//int width = bit_table.size() * 2 + 1;
 		vector<bool> row;
 
 		//First two and last two values in row use whitespace predictor
-		row.push_back(rule[conversion_table.at(vector < bool > {whitespace, whitespace, bit_table.back()[0]})]);
-		row.push_back(rule[conversion_table.at(vector < bool > {whitespace, bit_table.back()[0], bit_table.back()[1]})]);
+		row.push_back(rule[conversion_table.at(vector < bool > {whitespace, whitespace, bit_table.load().back()[0]})]);
+		row.push_back(rule[conversion_table.at(vector < bool > {whitespace, bit_table.load().back()[0], bit_table.load().back()[1]})]);
 
-		for (int i = 1; i < bit_table.size() * 2 - 2; i++){
+		for (int i = 1; i < bit_table.load().size() * 2 - 2; i++){
 			//3-bit vector mapped to conversion table, mapped to rule table, then saved to row
 			//append ... apply_rule(identify_pattern(bits)) ... to row
-			vector < bool > buffer { bit_table.back()[i - 1], bit_table.back()[i], bit_table.back()[i + 1] };
+			vector < bool > buffer{ bit_table.load().back()[i - 1], bit_table.load().back()[i], bit_table.load().back()[i + 1] };
 			row.push_back(rule[conversion_table.at(buffer)]);
 		}
 
-		row.push_back(rule[conversion_table.at(vector < bool > {bit_table.back()[bit_table.back().size() - 2], bit_table.back().back(), whitespace})]);
-		row.push_back(rule[conversion_table.at(vector < bool > {bit_table.back().back(), whitespace, whitespace})]);
+		row.push_back(rule[conversion_table.at(vector < bool > {bit_table.load().back()[bit_table.load().back().size() - 2], bit_table.load().back().back(), whitespace})]);
+		row.push_back(rule[conversion_table.at(vector < bool > {bit_table.load().back().back(), whitespace, whitespace})]);
 
 		//Save row
-		bit_table.push_back(row);
+		bit_table.load().push_back(row);
 	}
 }
 
@@ -75,7 +96,7 @@ bool Automaton_Elementary::whitespace_predictor(int row){
 	//Predict whitespace pattern of entire rows
 
 	//Whitespace alternates if black becomes white and white becomes black
-	if (!rule[7] && rule[0]) return (row) % 2;
+	if (!rule[7] && rule[0]) return bool((row) % 2);
 
 	//Whitespace is black if white becomes black
 	if (rule[0]) return true;

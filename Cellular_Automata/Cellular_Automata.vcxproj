@@ -83,14 +83,14 @@
   <ItemGroup>
     <ClCompile Include="..\Application.cpp" />
     <ClCompile Include="Automaton_Elementary.cpp" />
-    <ClCompile Include="Render.cpp" />
+    <ClCompile Include="Cellular_Render.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Automaton.h" />
     <ClInclude Include="Automaton_Elementary.h" />
     <ClInclude Include="Algorithm_Modulo.h" />
     <ClInclude Include="Algorithm_Random.h" />
-    <ClInclude Include="Render.h" />
+    <ClInclude Include="Cellular_Render.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

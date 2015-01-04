@@ -18,9 +18,6 @@
     <ClInclude Include="Automaton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Render.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Automaton_Elementary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -30,15 +27,18 @@
     <ClInclude Include="Algorithm_Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Cellular_Render.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Render.cpp">
+    <ClCompile Include="Automaton_Elementary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Automaton_Elementary.cpp">
+    <ClCompile Include="Cellular_Render.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

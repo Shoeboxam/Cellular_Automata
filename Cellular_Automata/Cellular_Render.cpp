@@ -1,9 +1,9 @@
-#include "Render.h"
+#include "Cellular_Render.h"
 
 #include <iostream>
 using std::cout;
 
-Render::Render(Automaton* m_autom){
+Cellular_Render::Cellular_Render(Automaton* m_autom){
 
 	//Save pointer to automaton
 	autom = m_autom;
@@ -29,7 +29,7 @@ Render::Render(Automaton* m_autom){
 	SDL_UpdateWindowSurface(window);
 }
 
-bool Render::draw(){
+bool Cellular_Render::draw(){
 	//Reset screen
 	SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0x67, 0x6c, 0x7e));
 
@@ -59,7 +59,7 @@ bool Render::draw(){
 }
 
 	
-bool Render::loop(){
+bool Cellular_Render::loop(){
 	bool quit = false;
 
 	while (!quit){
@@ -67,8 +67,8 @@ bool Render::loop(){
 		offset.first += momentum.first;
 		offset.second += momentum.second;
 
-		momentum.first *= .9;
-		momentum.second *= .9;
+		momentum.first *= .91;
+		momentum.second *= .91;
 
 		while (SDL_PollEvent(&event_current)){
 			switch (event_current.type){
@@ -119,11 +119,11 @@ bool Render::loop(){
 }
 
 
-void Render::set_automaton(Automaton* m_autom){
+void Cellular_Render::set_automaton(Automaton* m_autom){
 	autom = m_autom;
 }
 
-Render::~Render(){
+Cellular_Render::~Cellular_Render(){
 
 	SDL_DestroyWindow(window);
 	window = NULL;
@@ -132,17 +132,6 @@ Render::~Render(){
 }
 
 
-void Render::pause(int seconds){
+void Cellular_Render::pause(int seconds){
 	SDL_Delay(seconds * 1000);
 }
-
-
-/* ~~~ Keybindings
-Numpad - rule entry
-Scrollbar - zoom
-Mouse Left - drag
-Arrows - scroll
-Right Click - invert cell
-R - Random rule
-H - move location to home
-*/

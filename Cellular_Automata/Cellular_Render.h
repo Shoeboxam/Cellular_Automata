@@ -7,12 +7,11 @@
 #include <SDL.h>
 #include <utility>
 #include <chrono>
-#include <thread>
 
 #include "Automaton.h"
 
 
-class Render {
+class Cellular_Render {
 
 	Automaton* autom = NULL;
 
@@ -29,8 +28,8 @@ class Render {
 
 public:
 	bool draw();
-	Render(Automaton* m_autom);
-	~Render();
+	Cellular_Render(Automaton* m_autom);
+	~Cellular_Render();
 
 	bool loop();
 
