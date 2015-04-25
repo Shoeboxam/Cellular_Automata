@@ -2,12 +2,10 @@
 //Render configurable cellular automata
 
 #include <iostream>
-//#include <thread>
-
 #include "Automaton_Elementary.h"
 #include "Algorithm_Random.h"
 #include "Algorithm_Modulo.h"
-#include "Cellular_Render.h"
+#include "Render.h"
 
 using std::cout;
 using std::cin;
@@ -25,14 +23,18 @@ void console_render(Automaton &custom_automaton){
 int main(int argc, char* args[]) {
 
 	cout << "Rendering automaton . . . \n";
+	vector<Automaton_Elementary> automa_comprehensive;
+	
+	//Allocate 256 automata, one for each rule - initial allocation footprint is tiny
+	//Prevents destruction of computed automata
+	for (int i = 0; i < 256; i++){
+		automa_comprehensive.push_back(Automaton_Elementary(i));
+	}
 
-	Automaton_Elementary autom(193, 10);
+	Render* frame = new Render(new Automaton_Elementary(110));
+	//Render* frame = new Render(&Algorithm_Modulo());
+	//frame->draw();
+	frame->loop();
 
-	Cellular_Render* render = new Cellular_Render(&autom);
-	render->loop();
-	//std::thread render_thread(&Cellular_Render::loop, render);
-
-	//render_thread.join();
-	//delete &render;
 	return 0;
 }

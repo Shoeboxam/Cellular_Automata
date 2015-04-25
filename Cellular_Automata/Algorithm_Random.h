@@ -12,9 +12,10 @@ public:
 		//Seed random number generator
 		srand(static_cast<int>(time(NULL)));
 	}
+	string get_name(){ return "Random Algorithm"; }
 
 	bool Algorithm_Random::compose(int x, int y) {
-		return bool(rand() % 2);
+		return rand() % 2;
 	}
 };
 

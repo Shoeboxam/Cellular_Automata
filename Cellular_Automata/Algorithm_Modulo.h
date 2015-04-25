@@ -4,8 +4,9 @@
 #include "Automaton.h"
 
 class Algorithm_Modulo : public Automaton{
+	string get_name(){ return "Modulo Algorithm"; }
 	bool compose(int x, int y){
-		return bool((x % (y + 1) % 2)); //This is all there is to it!
+		return (abs(x) % (abs(y) + 1) % 2);
 	}
 };
 

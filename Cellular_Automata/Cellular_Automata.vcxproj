@@ -82,15 +82,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Application.cpp" />
+    <ClCompile Include="Automaton_Conway.cpp" />
     <ClCompile Include="Automaton_Elementary.cpp" />
-    <ClCompile Include="Cellular_Render.cpp" />
+    <ClCompile Include="Render.cpp" />
+    <ClCompile Include="Automaton_Conway.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Automaton.h" />
     <ClInclude Include="Automaton_Elementary.h" />
     <ClInclude Include="Algorithm_Modulo.h" />
     <ClInclude Include="Algorithm_Random.h" />
-    <ClInclude Include="Cellular_Render.h" />
+    <ClInclude Include="Render.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

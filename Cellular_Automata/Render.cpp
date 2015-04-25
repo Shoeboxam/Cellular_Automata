@@ -1,9 +1,9 @@
-#include "Cellular_Render.h"
-
+#include "Render.h"
 #include <iostream>
 using std::cout;
+#include <string>
 
-Cellular_Render::Cellular_Render(Automaton* m_autom){
+Render::Render(Automaton* m_autom){
 
 	//Save pointer to automaton
 	autom = m_autom;
@@ -15,7 +15,7 @@ Cellular_Render::Cellular_Render(Automaton* m_autom){
 	//Start SDL, check for failures
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) throw ("SDL failure to initialize: %s\n", SDL_GetError());
 
-	window = SDL_CreateWindow("Automaton", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow((m_autom->get_name()).c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (window == NULL) throw ("SDL failure to declare: %s\n", SDL_GetError());
 
 	surface = SDL_GetWindowSurface(window);
@@ -29,7 +29,7 @@ Cellular_Render::Cellular_Render(Automaton* m_autom){
 	SDL_UpdateWindowSurface(window);
 }
 
-bool Cellular_Render::draw(){
+bool Render::draw(){
 	//Reset screen
 	SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0x67, 0x6c, 0x7e));
 
@@ -59,7 +59,7 @@ bool Cellular_Render::draw(){
 }
 
 	
-bool Cellular_Render::loop(){
+bool Render::loop(){
 	bool quit = false;
 
 	while (!quit){
@@ -67,8 +67,8 @@ bool Cellular_Render::loop(){
 		offset.first += momentum.first;
 		offset.second += momentum.second;
 
-		momentum.first *= .91;
-		momentum.second *= .91;
+		momentum.first *= .9;
+		momentum.second *= .9;
 
 		while (SDL_PollEvent(&event_current)){
 			switch (event_current.type){
@@ -119,11 +119,11 @@ bool Cellular_Render::loop(){
 }
 
 
-void Cellular_Render::set_automaton(Automaton* m_autom){
+void Render::set_automaton(Automaton* m_autom){
 	autom = m_autom;
 }
 
-Cellular_Render::~Cellular_Render(){
+Render::~Render(){
 
 	SDL_DestroyWindow(window);
 	window = NULL;
@@ -132,6 +132,17 @@ Cellular_Render::~Cellular_Render(){
 }
 
 
-void Cellular_Render::pause(int seconds){
+void Render::pause(int seconds){
 	SDL_Delay(seconds * 1000);
 }
+
+
+/* ~~~ Keybindings
+Numpad - rule entry
+Scrollbar - zoom
+Mouse Left - drag
+Arrows - scroll
+Right Click - invert cell
+R - Random rule
+H - move location to home
+*/
